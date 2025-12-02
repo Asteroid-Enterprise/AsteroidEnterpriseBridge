@@ -18,7 +18,3 @@ Backend bridge plugin for [Asteroid Enterprise](https://builtbybit.com/resources
 
 - **Teleport Players** - Allows proxy to teleport fake players to specific locations
 - **Execute Commands** - Allows proxy to run commands on behalf of fake players
-
-## License
-
-MIT License - see [LICENSE](LICENSE) for details.
