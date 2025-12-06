@@ -2,3 +2,4 @@ name: AsteroidEnterpriseBridge
 version: '${version}'
 main: me.serbob.asteroidenterprisebridge.AsteroidEnterpriseBridge
 api-version: 1.13
+folia-supported: true
