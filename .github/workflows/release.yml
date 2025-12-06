@@ -34,7 +34,7 @@ jobs:
           echo "VERSION=$VERSION" >> $GITHUB_OUTPUT
 
       - name: Build JAR
-        run: ./gradlew jar
+        run: ./gradlew shadowJar
 
       - name: Delete existing release
         run: gh release delete "v${{ steps.get_version.outputs.VERSION }}" --yes --cleanup-tag || true

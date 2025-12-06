@@ -1,5 +1,6 @@
 plugins {
     id 'java'
+    id 'com.gradleup.shadow' version "8.3.0"
 }
 
 group = 'me.serbob'
@@ -9,10 +10,19 @@ repositories {
     mavenCentral()
     maven { url = 'https://hub.spigotmc.org/nexus/content/repositories/snapshots/' }
     maven { url = 'https://oss.sonatype.org/content/repositories/snapshots' }
+    maven { url = 'https://repo.tcoded.com/releases' }
 }
 
 dependencies {
     compileOnly 'org.spigotmc:spigot-api:1.19.4-R0.1-SNAPSHOT'
+
+    implementation 'com.tcoded:FoliaLib:0.5.1'
+}
+
+shadowJar {
+    relocate 'com.tcoded.folialib', 'me.serbob.asteroidenterprisebridge.libs.folialib'
+
+    archiveClassifier.set(null)
 }
 
 def targetJavaVersion = 8

@@ -1,5 +1,6 @@
 package me.serbob.asteroidenterprisebridge;
 
+import com.tcoded.folialib.FoliaLib;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -11,8 +12,12 @@ import com.google.common.io.ByteStreams;
 
 public class AsteroidEnterpriseBridge extends JavaPlugin implements PluginMessageListener {
 
+    private FoliaLib foliaLib;
+
     @Override
     public void onEnable() {
+        this.foliaLib = new FoliaLib(this);
+
         getServer().getMessenger().registerIncomingPluginChannel(this, "BungeeCord", this);
         getServer().getMessenger().registerOutgoingPluginChannel(this, "BungeeCord");
     }
@@ -54,9 +59,8 @@ public class AsteroidEnterpriseBridge extends JavaPlugin implements PluginMessag
         switch (action) {
             case "ExecuteCommand": {
                 String command = msgin.readUTF();
-                Bukkit.getScheduler().runTask(this, () -> {
-                    Bukkit.dispatchCommand(Bukkit.getConsoleSender(), command);
-                });
+                this.foliaLib.getScheduler().runLater(() ->
+                        Bukkit.dispatchCommand(Bukkit.getConsoleSender(), command), 1L);
 
                 break;
             }
@@ -77,9 +81,8 @@ public class AsteroidEnterpriseBridge extends JavaPlugin implements PluginMessag
                     return;
 
                 Location loc = new Location(targetWorld, x, y, z, yaw, pitch);
-                Bukkit.getScheduler().runTask(this, () -> {
-                    targetPlayer.teleport(loc);
-                });
+                this.foliaLib.getScheduler().runLater(() ->
+                        targetPlayer.teleport(loc), 1L);
 
                 break;
             }
