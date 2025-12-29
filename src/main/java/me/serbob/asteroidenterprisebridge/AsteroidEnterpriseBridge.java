@@ -81,8 +81,7 @@ public class AsteroidEnterpriseBridge extends JavaPlugin implements PluginMessag
                     return;
 
                 Location loc = new Location(targetWorld, x, y, z, yaw, pitch);
-                this.foliaLib.getScheduler().runLater(() ->
-                        targetPlayer.teleport(loc), 1L);
+                this.foliaLib.getScheduler().teleportAsync(player, loc);
 
                 break;
             }
