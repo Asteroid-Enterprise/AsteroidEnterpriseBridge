@@ -35,6 +35,8 @@ jobs:
 
       - name: Build JAR
         run: ./gradlew shadowJar
+        env:
+          GRADLE_OPTS: "-Dhttp.agent=Gradle"
 
       - name: Delete existing release
         run: gh release delete "v${{ steps.get_version.outputs.VERSION }}" --yes --cleanup-tag || true
