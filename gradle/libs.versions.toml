@@ -1,0 +1,16 @@
+[versions]
+spigot = "1.19.4-R0.1-SNAPSHOT"
+
+# useful
+lombok = "1.18.42"
+folialib = "0.5.1"
+
+[libraries]
+spigot = { group = "org.spigotmc", name = "spigot-api", version.ref  = "spigot"}
+
+# useful
+lombok = { group = "org.projectlombok", name = "lombok", version.ref = "lombok" }
+folialib = { group = "com.tcoded", name = "FoliaLib", version.ref = "folialib" }
+
+[plugins]
+shadow = { id = "com.gradleup.shadow", version = "9.4.2" }

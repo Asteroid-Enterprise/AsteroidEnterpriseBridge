@@ -27,10 +27,10 @@ jobs:
       - name: Grant execute permission for Gradle
         run: chmod +x gradlew
 
-      - name: Get version from build.gradle
+      - name: Get version from build.gradle.kts
         id: get_version
         run: |
-          VERSION=$(grep "^version = " build.gradle | sed "s/version = '\(.*\)'/\1/")
+          VERSION=$(grep "^version=" gradle.properties | sed "s/^version=//")
           echo "VERSION=$VERSION" >> $GITHUB_OUTPUT
 
       - name: Build JAR

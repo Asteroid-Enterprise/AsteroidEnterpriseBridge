@@ -5,6 +5,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
+import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.plugin.messaging.PluginMessageListener;
 import com.google.common.io.ByteArrayDataInput;
@@ -77,6 +78,9 @@ public class AsteroidEnterpriseBridge extends JavaPlugin implements PluginMessag
                 Player targetPlayer = Bukkit.getPlayer(playerName);
                 World targetWorld = Bukkit.getWorld(worldName);
 
+                targetPlayer.setMetadata("fake-player", new FixedMetadataValue(this, true));
+                targetPlayer.setMetadata("fake", new FixedMetadataValue(this, true));
+
                 if (targetPlayer == null || targetWorld == null)
                     return;
 
@@ -84,6 +88,14 @@ public class AsteroidEnterpriseBridge extends JavaPlugin implements PluginMessag
                 this.foliaLib.getScheduler().teleportAsync(player, loc);
 
                 break;
+            }
+
+            case "Metadata": {
+                String playerName = msgin.readUTF();
+                Player targetPlayer = Bukkit.getPlayer(playerName);
+
+                targetPlayer.setMetadata("fake-player", new FixedMetadataValue(this, true));
+                targetPlayer.setMetadata("fake", new FixedMetadataValue(this, true));
             }
         }
     }
