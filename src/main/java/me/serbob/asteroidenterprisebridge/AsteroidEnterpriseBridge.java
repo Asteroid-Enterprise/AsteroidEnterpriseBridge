@@ -5,11 +5,14 @@ import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
+import org.bukkit.generator.WorldInfo;
 import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.plugin.messaging.PluginMessageListener;
 import com.google.common.io.ByteArrayDataInput;
 import com.google.common.io.ByteStreams;
+
+import java.util.stream.Collectors;
 
 public class AsteroidEnterpriseBridge extends JavaPlugin implements PluginMessageListener {
 
@@ -78,11 +81,26 @@ public class AsteroidEnterpriseBridge extends JavaPlugin implements PluginMessag
                 Player targetPlayer = Bukkit.getPlayer(playerName);
                 World targetWorld = Bukkit.getWorld(worldName);
 
+                if (targetPlayer == null) {
+                    Bukkit.getLogger().warning("[ASTEROID ENTERPRISE] " +
+                            "The fake player that was about to be teleported (" +playerName + ") is null. " +
+                            "Please contact support."
+                    );
+                    return;
+                }
+
                 targetPlayer.setMetadata("fake-player", new FixedMetadataValue(this, true));
                 targetPlayer.setMetadata("fake", new FixedMetadataValue(this, true));
 
-                if (targetPlayer == null || targetWorld == null)
+                if (targetWorld == null) {
+                    Bukkit.getLogger().warning("[ASTEROID ENTERPRISE] " +
+                            "The world `" + worldName + "` that the fake player was about to teleport is invalid! " +
+                            "Here is a list of the available worlds: " +
+                            Bukkit.getWorlds().stream().map(WorldInfo::getName)
+                                    .collect(Collectors.joining(", "))
+                    );
                     return;
+                }
 
                 Location loc = new Location(targetWorld, x, y, z, yaw, pitch);
                 this.foliaLib.getScheduler().teleportAsync(player, loc);
